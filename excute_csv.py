@@ -17,7 +17,7 @@ class csv(object):
 
     def readSql(self):
         sqlAll = "SELECT id, title, price, avg, shitingwei, cenggao, \
-                        area, xiaoqu, weizhi, jingjiren, shiqu FROM info_main"
+                        area, xiaoqu, weizhi, jingjiren, shiqu FROM info"
         result = self.sqlHelper.exec_sql(sqlAll)
         for data in result:
             data['price'] = data['price'].replace('万', '')
@@ -40,9 +40,9 @@ class csv(object):
         for i in range(0, 30):
             min = i * 1000
             max = (i + 1) * 1000 - 1
-            dfTmp = self.filter(avgMin=min, avgMax=max)
+            dftmp = self.filter(avgMin=min, avgMax=max)
             listRange.append(str(i) + '-' + str(i+1))
-            listValue.append(len(dfTmp))
+            listValue.append(len(dftmp))
         data = {
                     '范围': listRange,
                     '二手房数量数量': listValue
@@ -72,8 +72,9 @@ class csv(object):
         dfAll.to_csv('各市区价格.csv', encoding='gbk')
 
     def filter(self, areaMin=30, areaMax=300, avgMin=3000, avgMax=30000):
-        return self.df.loc[(self.df['面积'] < areaMax) & (self.df['面积'] > areaMin) &
+        df = self.df.loc[(self.df['面积'] < areaMax) & (self.df['面积'] > areaMin) &
                               (self.df['均价'] < avgMax) & (self.df['均价'] > avgMin)]
+        return df;
 
     def avgMean(self):
         mean = self.df.describe()

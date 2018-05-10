@@ -87,7 +87,8 @@ class MySQL_Utils():
 
         except pymysql.Error as e:
             print(sql)
-            raise pymysql.Error(e)
+            pass
+            #raise pymysql.Error(e)
 
         finally:
             if self.__conn:
@@ -107,7 +108,8 @@ class MySQL_Utils():
             return self.rows_affected
 
         except pymysql.Error as e:
-            raise pymysql.Error(e)
+            pass
+            #raise pymysql.Error(e)
 
         finally:
             if self.__conn:
